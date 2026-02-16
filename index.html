@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Definitive Police Department | Portale Integrato</title>
+    <style>
+        :root {
+            --primary: #00122e;
+            --secondary: #002152;
+            --accent: #d4af37;
+            --danger: #b71c1c;
+            --success: #2e7d32;
+            --info: #0277bd;
+            --bg: #f4f7f9;
+            --white: #ffffff;
+            --text-dark: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; }
+        .logo-area span { color: var(--accent); font-size: 0.85rem; text-transform: uppercase; }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        section {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 0;
+            text-transform: uppercase;
+        }
+
+        /* --- PORTO D'ARMI INFO --- */
+        .step-box {
+            background: #fffcf0;
+            border: 1px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .step { margin-bottom: 15px; display: flex; gap: 10px; }
+        .step-num { 
+            background: var(--accent); color: var(--primary); 
+            width: 25px; height: 25px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
+        }
+
+        /* --- TABELLE --- */
+        .table-wrapper { overflow-x: auto; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f8f9fa; padding: 12px; text-align: left; border-bottom: 2px solid #eee; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+
+        /* --- FORMS --- */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; }
+        input, textarea, select {
+            width: 100%; padding: 12px; border: 1px solid #ccc; 
+            border-radius: 6px; box-sizing: border-box; font-family: inherit;
+        }
+
+        .btn-main {
+            background: var(--primary); color: white; border: none;
+            padding: 15px; width: 100%; font-weight: bold;
+            border-radius: 6px; cursor: pointer; text-transform: uppercase; transition: 0.3s;
+        }
+        .btn-main:hover { background: var(--secondary); opacity: 0.9; }
+
+        /* --- SIDEBAR --- */
+        .emergency-box {
+            background: var(--danger); color: white; padding: 25px;
+            border-radius: 12px; text-align: center; margin-bottom: 25px;
+        }
+        .phone { font-size: 2.5rem; font-weight: 900; display: block; }
+
+        footer { background: var(--primary); color: white; text-align: center; padding: 30px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>DEFINITIVE POLICE DEPT.</h1>
+            <span>Sicurezza e Integrità</span>
+        </div>
+        <nav>
+            <a href="#mdc">MDC</a>
+            <a href="#porto-armi">Porto d'Armi</a>
+            <a href="#denunce">Cittadini</a>
+            <a href="#rapporti">Area Agenti</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main>
+            <section id="mdc">
+                <h2>🔍 Mobile Data Computer (MDC)</h2>
+                <p>Inserimento rapido dati nel database centrale.</p>
+                <div class="form-group">
+                    <label>Nome Soggetto / ID</label>
+                    <input type="text" id="mdc_name" placeholder="Nome e Cognome">
+                </div>
+                <div class="form-group">
+                    <label>Note Giudiziarie / Crimini</label>
+                    <textarea id="mdc_notes" rows="3" placeholder="Descrivi i precedenti..."></textarea>
+                </div>
+                <button class="btn-main" onclick="sendToDiscord('mdc')">Invia a Database MDC</button>
+            </section>
+
+            <section id="porto-armi">
+                <h2>📜 Ottenimento Porto d'Armi</h2>
+                <p>Segui questa procedura ufficiale per essere in regola con la legge:</p>
+                <div class="step-box">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div><strong>Ospedale:</strong> Prenota una visita psicologica dal sito ufficiale dell'ospedale.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div><strong>Armeria:</strong> Se superi la visita, recati in armeria per acquistare il test balistico.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div><strong>Polizia:</strong> Porta i risultati al DPD per ricevere definitivamente il tuo porto d'armi.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="denunce">
+                <h2>📩 Segnalazioni e Denunce</h2>
+                <div class="form-group">
+                    <label>Contatto (Email/Tel)</label>
+                    <input type="text" id="den_contact" placeholder="Lascia un recapito se vuoi essere ricontattato">
+                </div>
+                <div class="form-group">
+                    <label>Descrizione della Segnalazione</label>
+                    <textarea id="den_text" rows="4" placeholder="Dettagli sul crimine o attività sospetta..."></textarea>
+                </div>
+                <button class="btn-main" style="background: var(--info);" onclick="sendToDiscord('denuncia')">Invia Denuncia</button>
+            </section>
+
+            <section id="smarriti">
+                <h2>📦 Oggetti Smarriti</h2>
+                <p>Aggiornamenti in tempo reale sugli oggetti rinvenuti nel distretto.</p>
+                <div class="table-wrapper">
+                    <table id="lostTable">
+                        <thead>
+                            <tr>
+                                <th>Data/Ora</th>
+                                <th>Descrizione Oggetto Rinvenuto</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lost_items_body">
+                            <tr>
+                                <td colspan="2" style="text-align:center;">In attesa di dati dal comando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <aside>
+            <div class="emergency-box">
+                <h2>EMERGENZA</h2>
+                <span class="phone">911</span>
+                <p>Attivo 24/7</p>
+            </div>
+
+            <section id="rapporti" style="border-top: 5px solid var(--primary);">
+                <h2>📝 Nuovo Rapporto</h2>
+                <div class="form-group">
+                    <label>Agente Operante</label>
+                    <input type="text" id="rap_agent" placeholder="Nome/Grado">
+                </div>
+                <div class="form-group">
+                    <label>Tipo di Intervento</label>
+                    <select id="rap_type">
+                        <option>Arresto</option>
+                        <option>Multa Stradale</option>
+                        <option>Sequestro Sostanze/Armi</option>
+                        <option>Pattugliamento</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Verbale Dettagliato</label>
+                    <textarea id="rap_body" rows="6" placeholder="Descrivi l'azione svolta..."></textarea>
+                </div>
+                <button class="btn-main" style="background: var(--success);" onclick="sendToDiscord('rapporto')">Archivia Rapporto</button>
+            </section>
+        </aside>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Definitive Police Department | HQ Centrale</p>
+    </footer>
+
+    <script>
+        // CONFIGURAZIONE WEBHOOKS DISCORD
+        const HOOKS = {
+            mdc: "https://discord.com/api/webhooks/1472878772159250567/UjJlIGf5zp1u7GVOWgvdOSae7iHfg6EtVPum9F2dZ39yULYNDuIpFlsnbo2rBJiBTpbM",
+            rapporto: "https://discord.com/api/webhooks/1472879311575846943/2Hofle5L2eJzfzpVMZI2TP_5qOONtmW6kVDzZQg965HZavNVC7oqyraPtc-yzSl-ruFr",
+            denuncia: "https://discord.com/api/webhooks/1472879479415373865/vtwLC_nsI3ok-aAby-JfScE1DKFk5aRdaR63_-XTttUcAuA-p1ox4HaUWpCJ8HGNMK-x",
+            smarriti: "https://discord.com/api/webhooks/1472880684409425980/zCKNhQasqA779_uq6uAlNDWEPAuWBf7FRlTg-bwX_DsB5x0_9p-FfS_bhoFr4skSlDjD"
+        };
+
+        async function sendToDiscord(type) {
+            let webhookUrl = HOOKS[type];
+            let payload = { content: "" };
+
+            if (type === 'mdc') {
+                const name = document.getElementById('mdc_name').value;
+                const notes = document.getElementById('mdc_notes').value;
+                payload.content = `🔍 **MDC - NUOVO INSERIMENTO**\n**Soggetto:** ${name}\n**Note:** ${notes}`;
+            } 
+            else if (type === 'rapporto') {
+                const agent = document.getElementById('rap_agent').value;
+                const rType = document.getElementById('rap_type').value;
+                const body = document.getElementById('rap_body').value;
+                payload.content = `📝 **RAPPORTO OPERATIVO**\n**Agente:** ${agent}\n**Tipo:** ${rType}\n**Verbale:** ${body}`;
+            } 
+            else if (type === 'denuncia') {
+                const contact = document.getElementById('den_contact').value;
+                const text = document.getElementById('den_text').value;
+                payload.content = `📩 **NUOVA DENUNCIA CITTADINO**\n**Contatto:** ${contact}\n**Dettagli:** ${text}`;
+            }
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert("Dati inviati con successo al Definitive Police Department!");
+                    // Pulisce i campi
+                    if(type === 'mdc') { document.getElementById('mdc_name').value = ''; document.getElementById('mdc_notes').value = ''; }
+                } else {
+                    alert("Errore nell'invio. Riprova.");
+                }
+            } catch (error) {
+                console.error("Errore Webhook:", error);
+                alert("Errore di connessione.");
+            }
+        }
+
+        // Funzione per simulare l'aggiornamento degli oggetti smarriti
+        // Nota: I webhook di Discord non permettono di leggere messaggi via GET,
+        // ma questa funzione prepara il sito a mostrare dati se integrato con un bot.
+        function updateLostItems(desc) {
+            const body = document.getElementById('lost_items_body');
+            const row = `<tr><td>${new Date().toLocaleString()}</td><td>${desc}</td></tr>`;
+            if(body.innerHTML.includes("In attesa")) body.innerHTML = "";
+            body.innerHTML = row + body.innerHTML;
+        }
+    </script>
+</body>
+</html>
