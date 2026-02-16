@@ -3,306 +3,438 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Definitive Police Department | Portale Integrato</title>
+    <title>Definitive Police Department | Central HQ</title>
     <style>
         :root {
             --primary: #00122e;
-            --secondary: #002152;
+            --secondary: #0a1f44;
             --accent: #d4af37;
             --danger: #b71c1c;
             --success: #2e7d32;
             --info: #0277bd;
-            --bg: #f4f7f9;
-            --white: #ffffff;
-            --text-dark: #1a1a1a;
+            --bg: #050a14;
+            --card-bg: #ffffff;
+            --sidebar-width: 260px;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             background-color: var(--bg);
-            color: var(--text-dark);
-            line-height: 1.6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* --- HEADER --- */
-        header {
+        /* --- SIDEBAR NAVIGATION --- */
+        .sidebar {
+            width: var(--sidebar-width);
             background: var(--primary);
-            color: var(--white);
-            padding: 1.5rem 5%;
+            color: white;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 4px solid var(--accent);
-            position: sticky;
-            top: 0;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            border-right: 2px solid var(--accent);
             z-index: 1000;
         }
 
-        .logo-area h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; }
-        .logo-area span { color: var(--accent); font-size: 0.85rem; text-transform: uppercase; }
+        .sidebar-header {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
 
-        nav a {
+        .sidebar-header h1 {
+            font-size: 1.4rem;
+            margin: 0;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        .sidebar-header span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .nav-menu {
+            flex-grow: 1;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
             color: white;
             text-decoration: none;
-            margin-left: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border-left: 4px solid transparent;
             font-weight: 600;
-            font-size: 0.9rem;
             text-transform: uppercase;
+            font-size: 0.85rem;
         }
 
-        nav a:hover { color: var(--accent); }
-
-        /* --- LAYOUT --- */
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            padding: 0 20px;
+        .nav-item:hover, .nav-item.active {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
         }
 
-        section {
-            background: var(--white);
-            padding: 30px;
+        /* --- MAIN CONTENT AREA --- */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 40px;
+            transition: all 0.3s;
+        }
+
+        .page-content {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CARDS & UI ELEMENTS --- */
+        .card {
+            background: var(--card-bg);
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 30px;
             margin-bottom: 30px;
+            border-top: 4px solid var(--accent);
         }
 
         h2 {
-            color: var(--primary);
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 10px;
             margin-top: 0;
+            color: var(--primary);
             text-transform: uppercase;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* --- PORTO D'ARMI INFO --- */
-        .step-box {
-            background: #fffcf0;
-            border: 1px solid var(--accent);
+        /* --- PROCEDURA PORTO D'ARMI --- */
+        .license-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .step-card {
+            background: #f8f9fa;
             padding: 20px;
             border-radius: 8px;
-            margin-top: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
         }
 
-        .step { margin-bottom: 15px; display: flex; gap: 10px; }
-        .step-num { 
-            background: var(--accent); color: var(--primary); 
-            width: 25px; height: 25px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; font-weight: bold;
+        .step-num {
+            background: var(--primary);
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: 900;
+            font-size: 1.2rem;
         }
 
-        /* --- TABELLE --- */
-        .table-wrapper { overflow-x: auto; margin-top: 15px; }
-        table { width: 100%; border-collapse: collapse; }
-        th { background: #f8f9fa; padding: 12px; text-align: left; border-bottom: 2px solid #eee; }
-        td { padding: 12px; border-bottom: 1px solid #eee; }
+        /* --- FORM STYLING --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
-        /* --- FORMS --- */
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .full-width { grid-column: span 2; }
+
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
         input, textarea, select {
-            width: 100%; padding: 12px; border: 1px solid #ccc; 
-            border-radius: 6px; box-sizing: border-box; font-family: inherit;
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            transition: border-color 0.3s;
         }
 
-        .btn-main {
-            background: var(--primary); color: white; border: none;
-            padding: 15px; width: 100%; font-weight: bold;
-            border-radius: 6px; cursor: pointer; text-transform: uppercase; transition: 0.3s;
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+            outline: none;
         }
-        .btn-main:hover { background: var(--secondary); opacity: 0.9; }
 
-        /* --- SIDEBAR --- */
-        .emergency-box {
-            background: var(--danger); color: white; padding: 25px;
-            border-radius: 12px; text-align: center; margin-bottom: 25px;
+        .btn-action {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            display: inline-block;
         }
-        .phone { font-size: 2.5rem; font-weight: 900; display: block; }
 
-        footer { background: var(--primary); color: white; text-align: center; padding: 30px; margin-top: 50px; }
+        .btn-action:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .emergency-banner {
+            background: var(--danger);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .sidebar { width: 70px; }
+            .sidebar-header, .nav-item span { display: none; }
+            .main-wrapper { margin-left: 70px; }
+            .form-grid, .license-steps { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-area">
-            <h1>DEFINITIVE POLICE DEPT.</h1>
-            <span>Sicurezza e Integrità</span>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>D.P.D.</h1>
+            <span>Definitive Police Dept.</span>
         </div>
-        <nav>
-            <a href="#mdc">MDC</a>
-            <a href="#porto-armi">Porto d'Armi</a>
-            <a href="#denunce">Cittadini</a>
-            <a href="#rapporti">Area Agenti</a>
-        </nav>
-    </header>
-
-    <div class="container">
-        <main>
-            <section id="mdc">
-                <h2>🔍 Mobile Data Computer (MDC)</h2>
-                <p>Inserimento rapido dati nel database centrale.</p>
-                <div class="form-group">
-                    <label>Nome Soggetto / ID</label>
-                    <input type="text" id="mdc_name" placeholder="Nome e Cognome">
-                </div>
-                <div class="form-group">
-                    <label>Note Giudiziarie / Crimini</label>
-                    <textarea id="mdc_notes" rows="3" placeholder="Descrivi i precedenti..."></textarea>
-                </div>
-                <button class="btn-main" onclick="sendToDiscord('mdc')">Invia a Database MDC</button>
-            </section>
-
-            <section id="porto-armi">
-                <h2>📜 Ottenimento Porto d'Armi</h2>
-                <p>Segui questa procedura ufficiale per essere in regola con la legge:</p>
-                <div class="step-box">
-                    <div class="step">
-                        <div class="step-num">1</div>
-                        <div><strong>Ospedale:</strong> Prenota una visita psicologica dal sito ufficiale dell'ospedale.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">2</div>
-                        <div><strong>Armeria:</strong> Se superi la visita, recati in armeria per acquistare il test balistico.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">3</div>
-                        <div><strong>Polizia:</strong> Porta i risultati al DPD per ricevere definitivamente il tuo porto d'armi.</div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="denunce">
-                <h2>📩 Segnalazioni e Denunce</h2>
-                <div class="form-group">
-                    <label>Contatto (Email/Tel)</label>
-                    <input type="text" id="den_contact" placeholder="Lascia un recapito se vuoi essere ricontattato">
-                </div>
-                <div class="form-group">
-                    <label>Descrizione della Segnalazione</label>
-                    <textarea id="den_text" rows="4" placeholder="Dettagli sul crimine o attività sospetta..."></textarea>
-                </div>
-                <button class="btn-main" style="background: var(--info);" onclick="sendToDiscord('denuncia')">Invia Denuncia</button>
-            </section>
-
-            <section id="smarriti">
-                <h2>📦 Oggetti Smarriti</h2>
-                <p>Aggiornamenti in tempo reale sugli oggetti rinvenuti nel distretto.</p>
-                <div class="table-wrapper">
-                    <table id="lostTable">
-                        <thead>
-                            <tr>
-                                <th>Data/Ora</th>
-                                <th>Descrizione Oggetto Rinvenuto</th>
-                            </tr>
-                        </thead>
-                        <tbody id="lost_items_body">
-                            <tr>
-                                <td colspan="2" style="text-align:center;">In attesa di dati dal comando...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </main>
-
-        <aside>
-            <div class="emergency-box">
-                <h2>EMERGENZA</h2>
-                <span class="phone">911</span>
-                <p>Attivo 24/7</p>
-            </div>
-
-            <section id="rapporti" style="border-top: 5px solid var(--primary);">
-                <h2>📝 Nuovo Rapporto</h2>
-                <div class="form-group">
-                    <label>Agente Operante</label>
-                    <input type="text" id="rap_agent" placeholder="Nome/Grado">
-                </div>
-                <div class="form-group">
-                    <label>Tipo di Intervento</label>
-                    <select id="rap_type">
-                        <option>Arresto</option>
-                        <option>Multa Stradale</option>
-                        <option>Sequestro Sostanze/Armi</option>
-                        <option>Pattugliamento</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Verbale Dettagliato</label>
-                    <textarea id="rap_body" rows="6" placeholder="Descrivi l'azione svolta..."></textarea>
-                </div>
-                <button class="btn-main" style="background: var(--success);" onclick="sendToDiscord('rapporto')">Archivia Rapporto</button>
-            </section>
-        </aside>
+        <div class="nav-menu">
+            <div class="nav-item active" onclick="showPage('home')">🏠 Dashboard</div>
+            <div class="nav-item" onclick="showPage('mdc-page')">🔍 Database MDC</div>
+            <div class="nav-item" onclick="showPage('license-page')">📜 Porto d'Armi</div>
+            <div class="nav-item" onclick="showPage('denunce-page')">📩 Area Cittadini</div>
+            <div class="nav-item" onclick="showPage('rapporti-page')">📝 Area Agenti</div>
+        </div>
+        <div style="padding: 20px; font-size: 0.7rem; opacity: 0.5; text-align: center;">
+            HQ CENTRAL UNIT v4.0
+        </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Definitive Police Department | HQ Centrale</p>
-    </footer>
+    <div class="main-wrapper">
+        <div class="emergency-banner">
+            LINEA DI EMERGENZA PRIORITARIA: 911 - ATTIVA 24/7
+        </div>
+
+        <div id="home" class="page-content active">
+            <div class="card">
+                <h2>Benvenuti al Comando Centrale</h2>
+                <p>Il portale del <strong>Definitive Police Department</strong> è il centro nevralgico per la sicurezza del distretto. Utilizza il menu laterale per accedere alle funzioni operative o ai servizi civili.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+                    <div style="background: #eef2f7; padding: 20px; border-radius: 10px;">
+                        <h4 style="margin-top:0">STATO SISTEMA</h4>
+                        <p style="color: var(--success); font-weight: bold;">● Server Webhook: Collegati</p>
+                        <p>● Database MDC: Sincronizzato</p>
+                    </div>
+                    <div style="background: #eef2f7; padding: 20px; border-radius: 10px;">
+                        <h4 style="margin-top:0">ULTIMI AVVISI</h4>
+                        <p>Tutte le unità sono pregate di aggiornare i rapporti entro fine turno.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mdc-page" class="page-content">
+            <div class="card">
+                <h2>🔍 Mobile Data Computer</h2>
+                <p>Ricerca e archiviazione soggetti nel database nazionale.</p>
+                <div class="form-group">
+                    <label>Nome Soggetto / ID Identificativo</label>
+                    <input type="text" id="mdc_name" placeholder="Inserire nome completo o numero ID">
+                </div>
+                <div class="form-group">
+                    <label>Note Giudiziarie e Precedenti</label>
+                    <textarea id="mdc_notes" rows="6" placeholder="Indicare reati, pericolosità o note di pattuglia..."></textarea>
+                </div>
+                <button class="btn-action" onclick="sendToDiscord('mdc')">Aggiorna Archivio MDC</button>
+            </div>
+        </div>
+
+        <div id="license-page" class="page-content">
+            <div class="card">
+                <h2>📜 Protocollo Porto d'Armi</h2>
+                <p>Iter burocratico obbligatorio per il rilascio della licenza di porto d'armi.</p>
+                <div class="license-steps">
+                    <div class="step-card">
+                        <div class="step-num">1</div>
+                        <strong>VISITA PSICOLOGICA</strong>
+                        <p>Prenota e supera la visita presso il sito web dell'Ospedale.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">2</div>
+                        <strong>TEST BALISTICO</strong>
+                        <p>Acquista ed esegui il test balistico presso l'Armeria locale.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">3</div>
+                        <strong>RILASCIO D.P.D.</strong>
+                        <p>Presentati in Centrale con i certificati per il rilascio finale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="denunce-page" class="page-content">
+            <div class="card">
+                <h2>📩 Segnalazioni e Denunce Civili</h2>
+                <p>Modulo per la collaborazione cittadina. Le segnalazioni possono essere anonime.</p>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Recapito (Email o Telefono)</label>
+                        <input type="text" id="den_contact" placeholder="Lascia vuoto per anonimato">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo di Segnalazione</label>
+                        <select id="den_type">
+                            <option>Attività Sospetta</option>
+                            <option>Denuncia di Furto</option>
+                            <option>Spaccio / Narcotici</option>
+                            <option>Violenza Civile</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Descrizione dettagliata dei fatti</label>
+                        <textarea id="den_text" rows="5" placeholder="Indica luogo, orario e descrizione dei sospetti..."></textarea>
+                    </div>
+                </div>
+                <button class="btn-action" style="background: var(--info);" onclick="sendToDiscord('denuncia')">Invia Segnalazione</button>
+            </div>
+        </div>
+
+        <div id="rapporti-page" class="page-content">
+            <div class="card">
+                <h2>📝 Archivio Rapporti Operativi</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Agente Responsabile</label>
+                        <input type="text" id="rap_agent" placeholder="Nome e Grado">
+                    </div>
+                    <div class="form-group">
+                        <label>Codice Intervento</label>
+                        <select id="rap_type">
+                            <option>10-15 (Arresto)</option>
+                            <option>10-38 (Multa Stradale)</option>
+                            <option>10-80 (Inseguimento)</option>
+                            <option>Sequestro Sostanze/Armi</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Verbale Operativo Completo</label>
+                        <textarea id="rap_body" rows="8" placeholder="Scrivi qui il resoconto completo dell'azione..."></textarea>
+                    </div>
+                </div>
+                <button class="btn-action" style="background: var(--success);" onclick="sendToDiscord('rapporto')">Archivia Rapporto Ufficiale</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // CONFIGURAZIONE WEBHOOKS DISCORD
+        // Gestione Pagine (SPA Logic)
+        function showPage(pageId) {
+            // Nascondi tutte le pagine
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            // Disattiva tutti i menu
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            
+            // Mostra pagina selezionata
+            document.getElementById(pageId).classList.add('active');
+            
+            // Attiva menu selezionato
+            event.currentTarget.classList.add('active');
+        }
+
+        // Configurazione Webhooks
         const HOOKS = {
             mdc: "https://discord.com/api/webhooks/1472878772159250567/UjJlIGf5zp1u7GVOWgvdOSae7iHfg6EtVPum9F2dZ39yULYNDuIpFlsnbo2rBJiBTpbM",
             rapporto: "https://discord.com/api/webhooks/1472879311575846943/2Hofle5L2eJzfzpVMZI2TP_5qOONtmW6kVDzZQg965HZavNVC7oqyraPtc-yzSl-ruFr",
-            denuncia: "https://discord.com/api/webhooks/1472879479415373865/vtwLC_nsI3ok-aAby-JfScE1DKFk5aRdaR63_-XTttUcAuA-p1ox4HaUWpCJ8HGNMK-x",
-            smarriti: "https://discord.com/api/webhooks/1472880684409425980/zCKNhQasqA779_uq6uAlNDWEPAuWBf7FRlTg-bwX_DsB5x0_9p-FfS_bhoFr4skSlDjD"
+            denuncia: "https://discord.com/api/webhooks/1472879479415373865/vtwLC_nsI3ok-aAby-JfScE1DKFk5aRdaR63_-XTttUcAuA-p1ox4HaUWpCJ8HGNMK-x"
         };
 
         async function sendToDiscord(type) {
-            let webhookUrl = HOOKS[type];
+            const url = HOOKS[type];
             let payload = { content: "" };
 
             if (type === 'mdc') {
                 const name = document.getElementById('mdc_name').value;
                 const notes = document.getElementById('mdc_notes').value;
-                payload.content = `🔍 **MDC - NUOVO INSERIMENTO**\n**Soggetto:** ${name}\n**Note:** ${notes}`;
+                if(!name || !notes) return alert("Compila tutti i campi MDC");
+                payload.content = `🔍 **NUOVO ENTRY MDC**\n**Soggetto:** ${name}\n**Note:** ${notes}`;
             } 
             else if (type === 'rapporto') {
                 const agent = document.getElementById('rap_agent').value;
                 const rType = document.getElementById('rap_type').value;
                 const body = document.getElementById('rap_body').value;
-                payload.content = `📝 **RAPPORTO OPERATIVO**\n**Agente:** ${agent}\n**Tipo:** ${rType}\n**Verbale:** ${body}`;
+                if(!agent || !body) return alert("Compila il rapporto");
+                payload.content = `📝 **RAPPORTO AGENTE**\n**Ufficiale:** ${agent}\n**Codice:** ${rType}\n**Dettagli:** ${body}`;
             } 
             else if (type === 'denuncia') {
-                const contact = document.getElementById('den_contact').value;
+                const contact = document.getElementById('den_contact').value || "Anonimo";
+                const dType = document.getElementById('den_type').value;
                 const text = document.getElementById('den_text').value;
-                payload.content = `📩 **NUOVA DENUNCIA CITTADINO**\n**Contatto:** ${contact}\n**Dettagli:** ${text}`;
+                if(!text) return alert("Inserisci il testo della denuncia");
+                payload.content = `📩 **DENUNCIA CITTADINO**\n**Tipo:** ${dType}\n**Contatto:** ${contact}\n**Testo:** ${text}`;
             }
 
             try {
-                const response = await fetch(webhookUrl, {
+                const resp = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                if (response.ok) {
-                    alert("Dati inviati con successo al Definitive Police Department!");
-                    // Pulisce i campi
+                if (resp.ok) {
+                    alert("Operazione completata con successo!");
+                    // Reset campi
                     if(type === 'mdc') { document.getElementById('mdc_name').value = ''; document.getElementById('mdc_notes').value = ''; }
+                    if(type === 'rapporto') { document.getElementById('rap_agent').value = ''; document.getElementById('rap_body').value = ''; }
+                    if(type === 'denuncia') { document.getElementById('den_text').value = ''; }
                 } else {
-                    alert("Errore nell'invio. Riprova.");
+                    alert("Errore nell'invio ai sistemi centrali.");
                 }
-            } catch (error) {
-                console.error("Errore Webhook:", error);
+            } catch (e) {
                 alert("Errore di connessione.");
             }
-        }
-
-        // Funzione per simulare l'aggiornamento degli oggetti smarriti
-        // Nota: I webhook di Discord non permettono di leggere messaggi via GET,
-        // ma questa funzione prepara il sito a mostrare dati se integrato con un bot.
-        function updateLostItems(desc) {
-            const body = document.getElementById('lost_items_body');
-            const row = `<tr><td>${new Date().toLocaleString()}</td><td>${desc}</td></tr>`;
-            if(body.innerHTML.includes("In attesa")) body.innerHTML = "";
-            body.innerHTML = row + body.innerHTML;
         }
     </script>
 </body>
